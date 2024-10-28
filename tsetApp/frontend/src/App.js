@@ -8,7 +8,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>My React App</h1>
+        <h1>Welcome to the Task Manager App</h1>
       </header>
       <main>
         <Register />

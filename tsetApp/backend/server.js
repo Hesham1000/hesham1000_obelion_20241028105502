@@ -1,14 +1,16 @@
-// server.js
-
 const express = require('express');
-const mysql = require('mysql2');
+const mysql = require('mysql');
 const authRoutes = require('./routes/authRoutes');
 const taskRoutes = require('./routes/taskRoutes');
 
 const app = express();
 
-// Middleware
+// Middleware configuration
 app.use(express.json());
+
+// Routes
+app.use('/auth', authRoutes);
+app.use('/tasks', taskRoutes);
 
 // Database connection
 const db = mysql.createConnection({
@@ -23,12 +25,8 @@ db.connect((err) => {
     console.error('Database connection failed:', err.stack);
     return;
   }
-  console.log('Connected to MySQL database.');
+  console.log('Connected to MySQL database');
 });
-
-// Routes
-app.use('/auth', authRoutes);
-app.use('/tasks', taskRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
@@ -36,7 +34,7 @@ app.use((err, req, res, next) => {
   res.status(500).send('Something broke!');
 });
 
-// Start server
+// Start the server
 const PORT = 8000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
